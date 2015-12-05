@@ -10,7 +10,7 @@ var host = 'https://demo.calendar42.com/';
 var authorizePath = 'oauth2/authorize/';
 var tokenPath = 'oauth2/token/';
 
-var calendarsPath = 'api/v2/events/';
+var calendarsPath = 'api/v2/calendars/';
 
 var oauth2 = new OAuth2(clientID,
                         clientSecret,
@@ -90,7 +90,7 @@ http.createServer(function (req, res) {
           oauth2.get(host + calendarsPath, access_token, function(response){
             var body = "";
             var data = JSON.parse(response.data);
-            if(response.statusCode === 200){
+            if(response.statusCode !== 200){
               // error
               body = "<p><b>StatusCode</b> = "+response.statusCode+"</p>" +
                 "<p><b>Message</b> = "+data.error.message+"</p>";
