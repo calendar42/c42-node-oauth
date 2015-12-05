@@ -4,7 +4,7 @@ var OAuth = require('oauth'), OAuth2 = OAuth.OAuth2;
 
 var clientID = '';
 var clientSecret = '';
-var serviceGUID = '';
+var serviceID = '';
 
 var host = 'https://demo.calendar42.com/';
 var authorizePath = 'oauth2/authorize/';
@@ -63,7 +63,7 @@ http.createServer(function (req, res) {
             {
               'grant_type':'authorization_code',
               'redirect_uri': 'http://localhost:8080/code/',
-              'service': serviceGUID
+              'service': serviceID
             },
             function (e, resp_access_token, refresh_token, results){
                 if (e) {

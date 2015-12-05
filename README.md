@@ -3,7 +3,7 @@ Node JS oAuth consumer for the C42 REST API
 
 This is an example project about how to consume the Calendar42 oAuth.
 
-It is using nodeJs technologies and the API [node-oauth](https://github.com/ciaranj/node-oauth)
+It is using nodeJS and the API [node-oauth](https://github.com/ciaranj/node-oauth)
 
 # Installation
 
@@ -25,7 +25,7 @@ Add your clientID, clientSecret and serviceID
 ...
 var clientID = '';
 var clientSecret = '';
-var serviceGUID = '';
+var serviceID = '';
 ...
 ```
 
