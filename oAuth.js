@@ -34,7 +34,8 @@ http.createServer(function (req, res) {
         // redirect_uri: 'http://localhost:8080/code',
         scope: ['service.read'],
         state: 'random_state_string',
-        response_type: 'code'
+        response_type: 'code',
+        email_address:"get_me_a_sandbox@gmail.com"
     });
 
     var access_token;
@@ -44,7 +45,7 @@ http.createServer(function (req, res) {
      */
     var body = '<a href="' + authURL + '"> Get C42 Code </a>';
     if (pLen === 2 && p[1] === '') {
-        console.log("link page requested")
+        console.log("link page requested");
         res.writeHead(200, {
             'Content-Length': body.length,
             'Content-Type': 'text/html' });
@@ -87,9 +88,9 @@ http.createServer(function (req, res) {
 
           oauth2.useAuthorizationHeaderforGET(true);
 
-          oauth2.get(host + calendarsPath, access_token, function(response){
+          oauth2.get(host + calendarsPath + '?service_ids=['+serviceID+']'  , access_token, function(error, result, response){
             var body = "";
-            var data = JSON.parse(response.data);
+            var data = JSON.parse(result);
             if(response.statusCode !== 200){
               // error
               body = "<p><b>StatusCode</b> = "+response.statusCode+"</p>" +
@@ -103,7 +104,7 @@ http.createServer(function (req, res) {
                 'Content-Type': 'text/html' });
             res.end(body);
           });
-        }
+        };
     } else {
       body = "Not Found";
       res.writeHead(404, {
