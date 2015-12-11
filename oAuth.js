@@ -5,10 +5,12 @@ var OAuth = require('oauth'), OAuth2 = OAuth.OAuth2;
 var clientID = '';
 var clientSecret = '';
 var serviceID = '';
+var sandboxEmail = '';
 
 var host = 'https://demo.calendar42.com/';
 var authorizePath = 'oauth2/authorize/';
 var tokenPath = 'oauth2/token/';
+
 
 var calendarsPath = 'api/v2/calendars/';
 
@@ -30,13 +32,19 @@ http.createServer(function (req, res) {
      * Adding params to authorize url with fields as mentioned in github docs
      *
      */
-    var authURL = oauth2.getAuthorizeUrl({
-        // redirect_uri: 'http://localhost:8080/code',
-        scope: ['service.read'],
-        state: 'random_state_string',
-        response_type: 'code',
-        email_address:"get_me_a_sandbox@gmail.com"
-    });
+
+     var getAuthorizeUrlOptions = {
+         // redirect_uri: 'http://localhost:8080/code',
+         scope: ['service.read'],
+         state: 'random_state_string',
+         response_type: 'code'
+     };
+
+     if(sandboxEmail !== ''){
+          getAuthorizeUrlOptions.email_address = sandboxEmail;
+     }
+
+    var authURL = oauth2.getAuthorizeUrl();
 
     var access_token;
 
