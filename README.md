@@ -45,3 +45,17 @@ localhost:8080
 
 Clicking the link you will start the oAuth process.
 The last page should show the Calendars list of the user used to login.
+
+For more information please check the [Calendar42 documentation](http://docs.calendar42.com/en/latest/rest-api/authentication/).
+
+## Silent flow
+
+The Calendar42 oAuth system allow for a `silent process`.
+
+To enable the silent flow it is required to set the `sandboxEmail` with a valid email.
+
+For more information about this process please check the [C42 silent oAuth flow documentation](http://docs.calendar42.com/en/latest/rest-api/authentication/#silent-oauth).
+
+## Valid endpoints
+
+All the information about the C42 API can be found [here](https://calendar42.com/api/docs/)
