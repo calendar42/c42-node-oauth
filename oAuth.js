@@ -2,16 +2,21 @@ var http = require('http');
 var qs = require('querystring');
 var OAuth = require('oauth'), OAuth2 = OAuth.OAuth2;
 
+/**
+  User and Server dependent variables
+*/
+var host = 'https://demo.calendar42.com/';
 var clientID = '';
 var clientSecret = '';
 var serviceID = '';
 var sandboxEmail = '';
 
-var host = 'https://demo.calendar42.com/';
+
+/**
+  User and Server agnostic variables
+*/
 var authorizePath = 'oauth2/authorize/';
 var tokenPath = 'oauth2/token/';
-
-
 var calendarsPath = 'api/v2/calendars/';
 
 var oauth2 = new OAuth2(clientID,
