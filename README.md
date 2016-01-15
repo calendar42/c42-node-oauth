@@ -1,7 +1,7 @@
 # c42-node-oauth
 Node JS oAuth consumer for the C42 REST API
 
-This is an example project about how to consume the Calendar42 oAuth.
+This is an example project about how to consume the [Calendar42 oAuth](http://docs.calendar42.com/en/latest/rest-api/oAuth-authorization/).
 
 It is using nodeJS and the API [node-oauth](https://github.com/ciaranj/node-oauth)
 
@@ -19,15 +19,19 @@ Install node-oauth
 npm install
 ```
 
-Add your clientID, clientSecret and serviceID
+In file `client-config.js` file is where you should introduce your client credentials.
 
 ```javascript
-...
-var clientID = '';
-var clientSecret = '';
-var serviceID = '';
-...
+exports.clientConfig = {
+  host: 'https://demo.calendar42.com/',
+  clientID : '',
+  clientSecret : '',
+  serviceID : '',
+  sandboxEmail : ''
+}
 ```
+
+> Don't you have an access token yet? Please visit our [documentation](http://docs.calendar42.com/en/latest/rest-api/api-tokens/) and [contact us](<mailto:support@calendar42.com>).
 
 # Usage
 
