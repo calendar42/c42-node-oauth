@@ -2,29 +2,20 @@ var http = require('http');
 var qs = require('querystring');
 var OAuth = require('oauth'), OAuth2 = OAuth.OAuth2;
 
-/**
-  User and Server dependent variables
-*/
-var host = 'https://demo.calendar42.com/';
-var clientID = '';
-var clientSecret = '';
-var serviceID = '';
-var sandboxEmail = '';
+var clientConfig = require("./client-config.js").clientConfig;
 
-
-/**
-  User and Server agnostic variables
-*/
 var authorizePath = 'oauth2/authorize/';
 var tokenPath = 'oauth2/token/';
 var calendarsPath = 'api/v2/calendars/';
 
-var oauth2 = new OAuth2(clientID,
-                        clientSecret,
-                        host,
+var oauth2 = new OAuth2(clientConfig.clientID,
+                        clientConfig.clientSecret,
+                        clientConfig.host,
                         authorizePath,
                         tokenPath,
                         null); /** Custom headers */
+
+console.log("Running in 8080 localhost port.");
 
 http.createServer(function (req, res) {
     var p = req.url.split('/');
@@ -45,20 +36,21 @@ http.createServer(function (req, res) {
          response_type: 'code'
      };
 
-     if(sandboxEmail !== ''){
-          getAuthorizeUrlOptions.email_address = sandboxEmail;
+     if(clientConfig.sandboxEmail !== ''){
+          getAuthorizeUrlOptions.email_address = clientConfig.sandboxEmail;
      }
 
-    var authURL = oauth2.getAuthorizeUrl();
+    var authURL = oauth2.getAuthorizeUrl(getAuthorizeUrlOptions);
 
     var access_token;
 
     /**
      * Creating an anchor with authURL as href and sending as response
-     */
-    var body = '<a href="' + authURL + '"> Get C42 Code </a>';
+    */
+    var process = (clientConfig.sandboxEmail=="")?"oAuth":"silent oAuth";
+    var body = '<a href="' + authURL + '"> Start the C42 '+process+' process </a>';
     if (pLen === 2 && p[1] === '') {
-        console.log("link page requested");
+        console.log("Link requested");
         res.writeHead(200, {
             'Content-Length': body.length,
             'Content-Type': 'text/html' });
@@ -77,7 +69,7 @@ http.createServer(function (req, res) {
             {
               'grant_type':'authorization_code',
               'redirect_uri': 'http://localhost:8080/code/',
-              'service': serviceID
+              'service': clientConfig.serviceID
             },
             function (e, resp_access_token, refresh_token, results){
                 if (e) {
@@ -101,7 +93,7 @@ http.createServer(function (req, res) {
 
           oauth2.useAuthorizationHeaderforGET(true);
 
-          oauth2.get(host + calendarsPath + '?service_ids=['+serviceID+']'  , access_token, function(error, result, response){
+          oauth2.get(clientConfig.host + calendarsPath + '?service_ids=['+clientConfig.serviceID+']'  , access_token, function(error, result, response){
             var body = "";
             var data = JSON.parse(result);
             if(response.statusCode !== 200){
